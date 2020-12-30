@@ -26,9 +26,10 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG'))
-if DEBUG:
+if not DEBUG:
     ALLOWED_HOSTS ='*'
 else:
+    SECRET_KEY = os.environ.get("DJANGO_SECRET")
     ALLOWED_HOSTS = [".elasticbeanstalk.com"]
 
 
@@ -90,7 +91,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-if DEBUG:
+if not DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -111,7 +112,7 @@ else:
     }
 
 
-if not DEBUG:
+if DEBUG:
 
     DEFAULT_FILE_STORAGE = "config.custom_storages.UploadStorage"
     STATICFILES_STORAGE = "config.custom_storages.StaticStorage"
